@@ -1,3 +1,5 @@
+const { template } = require("lodash");
+
 // when the userForm is conducted the submit event
 $('#userForm').on('submit', function() {
     //use serialize to get the context in the form and reformat the context to String
@@ -19,6 +21,7 @@ $('#userForm').on('submit', function() {
     return false;
 });
 
+// when user select file
 $('#avatar').on('change', function() {
     var formData = new FormData();
     formData.append('avatar', this.files[0]);
@@ -33,7 +36,19 @@ $('#avatar').on('change', function() {
             //console.log(response)
             // preview the user photo
             $('#preview').attr('src', response[0].avatar)
+                // since we need to give data to server again when user submit so we need the hidden domain 
             $('#hiddenAvatar').val(response[0].avatar)
         }
     })
+})
+
+// send  request to server ask for user list data
+$.ajax({
+    type: 'get',
+    url: '/user',
+    success: function(response) {
+        console.log(response)
+        template('userTpl', { data: response });
+        console.log(html)
+    }
 })
