@@ -27,11 +27,9 @@
             <div class="page-title">
                 <h1>用户</h1>
             </div>
-            <!-- <div class="alert alert-danger">
-<strong>错误！</strong>发生XXX错误
-</div> -->
+
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4" id="modifyBox">
                     <form id="userForm">
                         <h2>添加新用户</h2>
                         <div class="form-group">
@@ -147,6 +145,7 @@
     <script>
         NProgress.done()
     </script>
+    <!--user list template-->>
     <script type="text/html" id="userTpl">
         {{each data}}
         <tr>
@@ -155,18 +154,66 @@
             <td class="text-center">
 
                 {{if $value.avatar}}
-                <img class="avatar" src="{{$value.avatar}}"> {{/if}}
+                <img class="avatar" src="{{$value.avatar}}" /> {{/if}}
             </td>
             <td>{{$value.email}}</td>
             <td>{{$value.nickName}}</td>
             <td>{{$value.status == 0 ? 'unactive':'active'}}</td>
-            <td>{{$value.role == 'admin' ? 'admin','normal user'}}</td>
+            <td>{{$value.role == 'admin' ? 'admin':'normal user'}}</td>
             <td class="text-center">
-                <a href="javascript:;" class="btn btn-default btn-xs">edit</a>
+                <a href="javascript:;" class="btn btn-default btn-xs edit" data-id="{{$value._id}}">edit</a>
                 <a href="javascript:;" class="btn btn-danger btn-xs">delete</a>
             </td>
         </tr>
         {{/each }}
+    </script>
+    <!--user edit template-->>
+    <script type="text/html" id="modifyTpl">
+        <form id="modifyForm">
+            <h2>edit user info</h2>
+            <div class="form-group">
+                <label>头像</label>
+                <div class="form-group">
+                    <label class="form-image">
+                      <input id="avatar" type="file">
+                      {{if avatar}}
+                      <img src="{{avatar}}" id="preview"> 
+                      {{else}}
+                      <img src="../assets/img/default.png" id = "preview">
+                      {{/if}}
+                      <i class="mask fa fa-upload"></i>
+                    </label>
+                    <input type="hidden" name="avatar" id="hiddenAvatar">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>邮箱</label>
+                <input class="form-control" type="email" placeholder="请输入邮箱" name="email" value="{{email}}">
+            </div>
+            <div class="form-group">
+                <label>昵称</label>
+                <input class="form-control" type="text" placeholder="请输入昵称" name="nickName" value="{{nickName}}">
+            </div>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label><input type="radio" name="status" value="0" {{status == 0? 'checked' : ''}}>未激活</label>
+                </div>
+                <div class="radio-inline">
+                    <label><input type="radio" name="status" value="1" {{status == 1? 'checked' : ''}}>激活</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label><input type="radio" name="role" value="admin" {{role == 'admin' ? 'checked' : ''}}>超级管理员</label>
+                </div>
+                <div class="radio-inline">
+                    <label><input type="radio" name="role" value="normal" {{role == 'normal' ? 'checked' : ''}}>普通用户</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">edit</button>
+            </div>
+        </form>
     </script>
     <script src="../assets/js/user.js"></script>
 </body>

@@ -1,5 +1,3 @@
-const { template } = require("lodash");
-
 // when the userForm is conducted the submit event
 $('#userForm').on('submit', function() {
     //use serialize to get the context in the form and reformat the context to String
@@ -45,10 +43,24 @@ $('#avatar').on('change', function() {
 // send  request to server ask for user list data
 $.ajax({
     type: 'get',
-    url: '/user',
+    url: '/users',
     success: function(response) {
         console.log(response)
-        template('userTpl', { data: response });
+        var html = template('userTpl', { data: response });
         $('#userBox').html(html);
     }
-})
+});
+
+$('#userBox').on('click', '.edit', function() {
+    //get the user id who is clicked
+    var id = $(this).attr('data-id');
+    $.ajax({
+        type: 'get',
+        url: '/users/' + id,
+        success: function(response) {
+            console.log(response)
+            var html = template('modifyTpl', response);
+            $('#modifyBox').html(html);
+        }
+    })
+});
