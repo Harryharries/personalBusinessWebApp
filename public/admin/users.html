@@ -95,7 +95,7 @@
                                 <th class="text-center" width="100">操作</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="userBox">
 
                         </tbody>
                     </table>
@@ -151,7 +151,12 @@
         {{each data}}
         <tr>
             <td class="text-center"><input type="checkbox"></td>
-            <td class="text-center"><img class="avatar" src="../assets/img/default.png"></td>
+
+            <td class="text-center">
+
+                {{if $value.avatar}}
+                <img class="avatar" src="{{$value.avatar}}"> {{/if}}
+            </td>
             <td>{{$value.email}}</td>
             <td>{{$value.nickName}}</td>
             <td>{{$value.status == 0 ? 'unactive':'active'}}</td>

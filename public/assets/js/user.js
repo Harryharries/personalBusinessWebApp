@@ -49,6 +49,6 @@ $.ajax({
     success: function(response) {
         console.log(response)
         template('userTpl', { data: response });
-        console.log(html)
+        $('#userBox').html(html);
     }
 })
