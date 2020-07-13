@@ -169,7 +169,7 @@
     </script>
     <!--user edit template-->>
     <script type="text/html" id="modifyTpl">
-        <form id="modifyForm">
+        <form id="modifyForm" data-id="{{_id}}">
             <h2>edit user info</h2>
             <div class="form-group">
                 <label>头像</label>
@@ -183,7 +183,7 @@
                       {{/if}}
                       <i class="mask fa fa-upload"></i>
                     </label>
-                    <input type="hidden" name="avatar" id="hiddenAvatar">
+                    <input type="hidden" name="avatar" id="hiddenAvatar" value="{{avatar}}">
                 </div>
             </div>
             <div class="form-group">

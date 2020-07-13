@@ -51,6 +51,7 @@ $.ajax({
     }
 });
 
+// add click event onto the edit button
 $('#userBox').on('click', '.edit', function() {
     //get the user id who is clicked
     var id = $(this).attr('data-id');
@@ -58,9 +59,23 @@ $('#userBox').on('click', '.edit', function() {
         type: 'get',
         url: '/users/' + id,
         success: function(response) {
-            console.log(response)
+            //console.log(response)
             var html = template('modifyTpl', response);
             $('#modifyBox').html(html);
         }
     })
 });
+
+// add submit event onto the form
+$('#modifyBox').on('submit', '#modifyForm', function() {
+    var formData = $(this).serialize();
+    var id = $(this).attr('data-id');
+    $.ajax({
+        type: 'put',
+        url: '/users/' + id,
+        data: formData,
+        success: function(response) {
+            location.reload()
+        }
+    })
+})
