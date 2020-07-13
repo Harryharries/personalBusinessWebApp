@@ -20,7 +20,7 @@ $('#userForm').on('submit', function() {
 });
 
 // when user select file
-$('#avatar').on('change', function() {
+$('#modifyBox').on('change', '#avatar', function() {
     var formData = new FormData();
     formData.append('avatar', this.files[0]);
 
@@ -38,7 +38,7 @@ $('#avatar').on('change', function() {
             $('#hiddenAvatar').val(response[0].avatar)
         }
     })
-})
+});
 
 // send  request to server ask for user list data
 $.ajax({
@@ -79,3 +79,18 @@ $('#modifyBox').on('submit', '#modifyForm', function() {
         }
     })
 })
+
+// add click event onto the edit button
+$('#userBox').on('click', '.delete', function() {
+    var id = $(this).attr('data-id');
+    if (confirm('are u sure to delete : ' + id + '?')) {
+        $.ajax({
+            type: 'delete',
+            url: '/users/' + id,
+            success: function(response) {
+                location.reload()
+            }
+        })
+    }
+    //get the user id who is clicked
+});
